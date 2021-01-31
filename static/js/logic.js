@@ -1,7 +1,7 @@
 
-url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson"
+url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 
-var centerCoords = [40.73, -74.0059];
+var centerCoords = [37, -122];
 
 function createMap(earthquakes) {
 
@@ -24,9 +24,9 @@ function createMap(earthquakes) {
     };
   
     // Create the map object with options
-    var map = L.map("map-id", {
+    var map = L.map("map", {
       center: centerCoords,
-      zoom: 12,
+      zoom: 8,
       layers: [lightmap, earthquakes]
     });
   
@@ -45,11 +45,12 @@ function createMarkers(response) {
 
     // Loop through the array
     for (var i = 0; i < features.length; i++) {
-        var quake = features[index];
+        var quake = features[i];
 
         // For each quake, create a marker and bind a popup with the station's name
         var quakeMarker = L.marker([quake.geometry.coordinates[0], quake.geometry.coordinates[1]])
         .bindPopup("<h3>" + quake.properties.mag + "</h3>");
+
 
         // Add the marker to the array
         quakeMarkers.push(quakeMarker);
