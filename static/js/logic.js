@@ -67,10 +67,17 @@ function createMarkers(response) {
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, geojsonMarkerOptions);
       },
-      style: {'fillColor': 'blue'}
-      // function(feature) {
-      //    return {"size": (feature.properties.mag)*5} 
-      //   }
+      style: function(feature) {
+          let myMag = feature.properties.mag;
+          let rad = myMag * 5 - 5;
+          let opac = 1 - 1 / myMag;
+          let style = {
+            'radius': rad,
+            'fillOpacity': opac,
+            'fillColor': 'red'
+          }
+         return style 
+        }
     });
 
     createMap(edata);
