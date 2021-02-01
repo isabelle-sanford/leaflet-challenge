@@ -1,7 +1,7 @@
 // MINE
-url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson"
 
-var centerCoords = [37, -122];
+var centerCoords = [-17, 178];
 
 function createMap(earthquakes) {
 
@@ -35,11 +35,19 @@ function createMap(earthquakes) {
       collapsed: false
     }).addTo(map);
 
-
-
-
 }
   
+
+var geojsonMarkerOptions = {
+  radius: 8,
+  fillColor: "#ff7800",
+  color: "#000",
+  weight: 1,
+  opacity: 1,
+  fillOpacity: 0.8
+};
+
+
 function createMarkers(response) {
     // Pull the "stations" property off of response.data
     var features = response.features;
@@ -49,33 +57,19 @@ function createMarkers(response) {
     }
 
     var edata = L.geoJSON(features, {
-      onEachFeature: onEachFeature
+      onEachFeature: onEachFeature,
+      pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, geojsonMarkerOptions);
+      }
     });
 
-    // Initialize an array to hold markers
-    // var quakeMarkers = [];
-
-    // // Loop through the array
-    // for (var i = 0; i < features.length; i++) {
-    //     var quake = features[i];
-
-    //     //console.log(quake.properties.mag)
-    //     var loc = [quake.geometry.coordinates[0], quake.geometry.coordinates[1]];
-
-    //     // For each quake, create a marker and bind a popup with the station's name
-    //     var quakeMarker = L.marker(loc);
-    //     //.bindPopup("<h3>" + quake.properties.mag + "</h3>");
-
-
-    //     // Add the marker to the array
-    //     quakeMarkers.push(quakeMarker);
-    // }
-    // //console.log(quakeMarkers)
-
-    // Create a layer group made from the bike markers array, pass it into the createMap function
     createMap(edata);
 }
   
+
+
+
+
   
   // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
   d3.json(url, function(data) {
