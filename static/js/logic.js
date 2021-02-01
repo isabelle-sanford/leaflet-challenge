@@ -1,5 +1,5 @@
 // MINE
-url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson"
+url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 
 var centerCoords = [-17, 178];
 
@@ -47,6 +47,12 @@ var geojsonMarkerOptions = {
   fillOpacity: 0.8
 };
 
+// function relStyle(feature) {
+//   let mag = feature.properties.mag;
+
+//   return mag * 2;
+// }
+
 
 function createMarkers(response) {
     // Pull the "stations" property off of response.data
@@ -60,7 +66,11 @@ function createMarkers(response) {
       onEachFeature: onEachFeature,
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, geojsonMarkerOptions);
-      }
+      },
+      style: {'fillColor': 'blue'}
+      // function(feature) {
+      //    return {"size": (feature.properties.mag)*5} 
+      //   }
     });
 
     createMap(edata);
