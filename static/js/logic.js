@@ -1,7 +1,7 @@
 // MINE
-url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.geojson"
 
-var centerCoords = [-17, 178];
+var centerCoords = [34, -122];
 
 function createMap(earthquakes) {
 
@@ -26,7 +26,7 @@ function createMap(earthquakes) {
     // Create the map object with options
     var map = L.map("map", {
       center: centerCoords,
-      zoom: 5,
+      zoom: 6,
       layers: [lightmap, earthquakes]
     });
   
@@ -40,18 +40,12 @@ function createMap(earthquakes) {
 
 var geojsonMarkerOptions = {
   radius: 8,
-  fillColor: "#ff7800",
+  fillColor: "pink",
   color: "#000",
   weight: 1,
   opacity: 1,
-  fillOpacity: 0.8
+  fillOpacity: 1
 };
-
-// function relStyle(feature) {
-//   let mag = feature.properties.mag;
-
-//   return mag * 2;
-// }
 
 
 function createMarkers(response) {
@@ -69,8 +63,8 @@ function createMarkers(response) {
       },
       style: function(feature) {
           let myMag = feature.properties.mag;
-          let rad = myMag * 5 - 5;
-          let opac = 1 - 1 / myMag;
+          let rad = myMag * 5.1 - 5;
+          let opac = 1 - 1.1 / myMag;
           let style = {
             'radius': rad,
             'fillOpacity': opac,
@@ -83,10 +77,6 @@ function createMarkers(response) {
     createMap(edata);
 }
   
-
-
-
-
   
   // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
   d3.json(url, function(data) {
